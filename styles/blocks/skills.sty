@@ -1,0 +1,36 @@
+%---------------------------------------------------------
+%	Interfase
+%---------------------------------------------------------
+\newcommand{\skillForeColor}{GreenIT}
+\newcommand{\skillSectionColor}{GreenIT}
+\newcommand{\skillSectionSize}{\large}
+\newcommand{\skillTextSize}{\normalsize}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\skill}[2]{%
+    \textcolor{\skillForeColor}{
+    \textbf{#1}}\hfill
+    \barChart{#2}\par%
+}
+
+
+% skill without any charts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\simpleskill}[1]{%
+    \textcolor{\skillForeColor}{
+        \textbf{#1}}\par%
+}
+% sectioning of skills
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\skillsection}[1]{%
+    \skillSectionSize{
+    \color{\skillSectionColor!70!white}\textbf{#1}}
+    \smallskip
+    \par
+    \skillTextSize
+}

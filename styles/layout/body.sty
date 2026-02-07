@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% body
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\mainbar}[1]{%
+    \def\@mainbar{%
+        \begin{minipage}[t]{\dimexpr \textwidth-\sideWidth}%
+            #1%
+        \end{minipage}%
+    }
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Ver 2. mas sencilla
+%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{body}{
+    \renewcommand{\achievementTextColor}{\bodyTextColor}
+    \renewcommand{\achievementSecTextColor}{\bodyHighlightColor}
+    \renewcommand{\achievementIconColor}{\bodyEmphColor}
+    \renewcommand{\achievementHighlightTextColor}{\bodyEmphColor}
+    
+    \begin{tikzpicture}[remember picture,overlay]
+        \draw [
+        draw=\bodyTextColor, 
+        shift={(current page.north west)}, very thick]
+        (\paperwidth-0.5\margin,-\topHeight-2.5\margin) --
+        (\paperwidth-0.5\margin,-\paperheight+0.5\margin+0.5\angleSize) --
+        (\paperwidth-0.5\margin-0.5\angleSize,-\paperheight+0.5\margin) --
+        (\sideWidth+2.5\margin,-\paperheight+0.5\margin);
+    \end{tikzpicture}
+    
+    \begin{textblock*}
+    {\bodyWidth}
+    (\paperwidth-\bodyWidth-\margin,\topHeight)%(x,y)
+    \begin{center}
+}{
+    \end{center}
+    \end{textblock*}
+}
+
+%%%%%%%%%%%%%%%%%%
+% Body for odd pages
+\newenvironment{bodyODD}{
+    \begin{tikzpicture}[remember picture,overlay]
+        \draw [
+        draw=\bodyTextColor, 
+        shift={(current page.north west)}, very thick]
+        (\paperwidth-\sideWidth-2.5\margin,-\paperheight+0.5\margin) --
+        (\margin, -\paperheight+0.5\margin) --
+        (0.5\margin, -\paperheight+\margin) --
+        (0.5\margin, -0.5\paperheight);
+    \end{tikzpicture}
+    
+    \begin{textblock*}
+    {\bodyWidth}
+    (\margin, \margin)%(x,y)
+    \begin{center}
+}{
+    \end{center}
+    \end{textblock*}
+}

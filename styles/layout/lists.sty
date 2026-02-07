@@ -1,0 +1,25 @@
+%---------------------------------------------------------
+%	Interfase
+%       Remember use \nextcolumn 
+%           at socialNetwork environment
+%---------------------------------------------------------
+\newcommand{\itemBulletColor}{red}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ItemList
+\newenvironment{itemList}{ %
+    \renewcommand{\descriptionlabel}[1]{%
+        \def\temp{##1}%
+        \ifx\temp\empty % Default bullet
+            \textbf{\color{\itemBulletColor}\tiny\faSquare}%
+        \else %
+            \textbf{\color{\itemBulletColor}##1}
+        \fi%
+        }%
+\begin{description}}
+{\end{description}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%lists
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlist[itemize]{noitemsep, topsep=0pt, leftmargin=1em}

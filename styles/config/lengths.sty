@@ -1,0 +1,58 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DEFINE GEOMETRY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newlength\marginLeft
+\newlength\marginRight
+\newlength\marginTop
+\newlength\marginBottom
+
+\newlength\margin
+\newlength\sideWidth
+\newlength\bodyWidth
+\newlength\angleSize
+\newlength\topHeight
+\newlength\profileSize %Image
+
+% default sizes, margins, ...
+
+\setlength\margin{1cm}
+\setlength\marginLeft{\margin}
+\setlength\marginRight{\margin}
+\setlength\marginTop{\margin}
+\setlength\marginBottom{\margin}
+
+
+\setlength\sideWidth{0.5\paperwidth-1\margin}
+\setlength\bodyWidth{\paperwidth-3.5\margin-\sideWidth}
+\setlength\angleSize{0.7cm}
+\setlength\topHeight{55mm}
+\setlength\profileSize{0.5\topHeight}
+
+
+
+\geometry{
+    left=\marginLeft,
+    right=\marginRight,
+    top=\marginTop,
+    bottom=\marginBottom}
+
+% \setlength{\voffset}{\dimexpr -1in+\margintop}
+% \setlength{\topmargin}{0cm}
+
+% minipage has an annoying af indent that must be removed
+\setlength{\parindent}{0pt}
+
+
+%---------------------------------------------------------
+%	Paragraph
+%---------------------------------------------------------
+
+\setlength{\parindent}{0mm} % Suppress paragraph indentation
+
+
+
+
+
+
+

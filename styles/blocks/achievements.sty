@@ -1,0 +1,56 @@
+\newcommand{\achievementIconColor}{GreenIT}
+\newcommand{\achievementTextColor}{White}
+\newcommand{\achievementSecTextColor}{Grey}
+\newcommand{\achievementHighlightTextColor}{Grey}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% achievement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\achievement}[3]{%
+    \begin{minipage}[t]{3mm}%
+        \makebox[3mm][c]{\color{\achievementIconColor}
+        \footnotesize #1}
+    \end{minipage}%
+    \hspace{0.5em}%
+    \begin{minipage}[!t]{\dimexpr \textwidth-0.5em-3mm}
+        {\color{\achievementTextColor}
+        \normalsize{#2} 
+        \color{\achievementSecTextColor}
+        \hfill
+        \def\temp{#3}\ifx\temp\empty
+        \else
+            \\\mbox{\color{\achievementHighlightTextColor}\small{#3}}
+        \fi}
+    \end{minipage}
+    \par
+    \vspace{0.5em}
+}
+
+\newcommand{\assistant}[2][]{
+    \achievement{\faUserPlus}{#2}{#1}
+}
+
+\newcommand{\project}[2][]{
+    \achievement{\faCogs}{#2}{#1}
+}
+
+\newcommand{\award}[2][]{
+    \achievement{\faTrophy}{#2}{#1}
+}
+
+
+\newcommand{\competition}[2][]{
+    \achievement{\faDollar}{#2}{#1}
+}
+
+\newcommand{\patent}[2][]{
+    \achievement{\faTrademark}{#2}{#1}
+}
+
+\newcommand{\course}[2][]{
+    \achievement{\faBook}{#2}{#1}
+}
+
+\newcommand{\trial}[2][]{
+    \achievement{\faBalanceScale}{#2}{#1}
+}

@@ -1,0 +1,71 @@
+% publication
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand*{\ADS}[1]{\textcolor{awesome-skyblue}{\href{#1}{ADS}}}
+\newcommand*{\arXiv}[1]{\textcolor{awesome-skyblue}{\href{#1}{arXiv}}}
+
+\newlength{\pubdatelength}
+\newlength{\pubjournallength}
+\newlength{\publinklength}
+
+% Spacings work erratically. Setting a highlight bar or not redefines \linewidth in a weird way which breaks the spacing and introduces line breaks. I have no idea what exactly causes this problem.
+
+% helper function to set spacings that work empirically
+\newcommand{\pubdefaultspacing}{%
+    \setlength{\pubdatelength}{0.15\linewidth}
+    \setlength{\pubjournallength}{0.65\linewidth}
+    \setlength{\publinklength}{0.20\linewidth}
+}
+
+% helper function to force the publication to use the full width in normal page styles without highlight bar or header
+\newcommand{\pubforcefullwidth}{%
+    \setlength{\pubdatelength}{0.1\textwidth}
+    \setlength{\pubjournallength}{0.8\textwidth}
+    \setlength{\publinklength}{0.1\textwidth}
+}
+
+% \pubforcefullwidth
+\pubdefaultspacing
+
+\newcommand{\publication}[5]{%
+    {\normalsize \color{emphasis}#1\par}
+    \vspace{0.1em}%
+    \begin{minipage}[t]{3mm}%
+        \makebox[3mm][c]{\footnotesize \faGroup}
+    \end{minipage}%
+    \hspace{0.5em}%
+    \begin{minipage}[t]{\dimexpr \linewidth-3mm-0.5em}%
+        {\footnotesize #2\par}
+    \end{minipage}%
+    \par%
+    \vspace{0.25em}%
+    \ifstrequal{#4}{}{%
+        \begin{minipage}[t]{\dimexpr \pubdatelength+\pubjournallength-1.0em}%
+            \footnotesize \makebox[3mm][c]{\faCalendar} \hspace{0.25em} #3
+        \end{minipage}%
+    }{%
+        \begin{minipage}[t]{\dimexpr \pubdatelength-1.0em}%
+            \footnotesize \makebox[3mm][c]{\faCalendar} \hspace{0.25em} #3
+        \end{minipage}%
+    }%
+    \hspace{1.0em}
+    \begin{minipage}[t]{\dimexpr \pubjournallength-1.0em}%
+        \ifstrequal{#4}{}{}{%
+            \begin{minipage}[t]{3mm}%
+                \makebox[3mm][c]{\footnotesize \faBook}
+            \end{minipage}%
+            \hspace{0.5em}%
+            \begin{minipage}[t]{\dimexpr \linewidth-3mm-0.25em}%
+                {\footnotesize #4\par}
+            \end{minipage}%
+        }%
+    \end{minipage}%
+    \hspace{1.0em}
+    \begin{minipage}[t]{\publinklength}%
+        \ifstrequal{#5}{}{}{%
+            \footnotesize \makebox[3mm][c]{\faChain} \hspace{0.25em} #5\par
+        }%
+    \end{minipage}%
+    \par\normalsize
+    \vspace{1.0em}
+}

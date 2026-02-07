@@ -1,0 +1,36 @@
+%---------------------------------------------------------
+%	Interfase
+%---------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DoubleColumns
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{doubleColumns}{%
+    %%%%%%%%% Use this command to split
+    \newcommand{\nextcolumn}{
+        \end{itemList}\end{minipage}
+        \hfill
+        \begin{minipage}[t]{0.5\textwidth-2\margin}
+        \begin{itemList}
+    }
+    
+    \begin{minipage}[t]{0.5\textwidth-0.5\margin}
+    \begin{itemList}
+}{
+    \end{itemList}
+    \end{minipage}\\\vspace*{0.15cm}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% TripleColumns
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{tripleColumns}{
+    %%%%%%%%% Use this command to split
+    \newcommand{\nextcolumn}{\end{itemList}\end{minipage}\hfill\begin{minipage}[t]{0.25\textwidth-1\margin}\begin{itemList}}
+    
+    \begin{minipage}[t]{0.5\textwidth+1\margin}
+    \begin{itemList}
+}{
+    \end{itemList}
+    \end{minipage}\\\vspace*{0.15cm}
+}

@@ -1,0 +1,41 @@
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% degree
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\degree}[6]{%Title, speciality, dats start, date end, faculty, location
+\begin{minipage}[c]{3mm}%
+    \color{\degreeFrameColor}\scriptsize\faGraduationCap
+\end{minipage}%
+\hspace{0.5em}%
+\begin{minipage}[t]{\dimexpr \textwidth-0.5em-3mm}%
+    \begin{flushleft}
+        \large{%
+            \textbf{%
+            \color{\degreeEmphColor}%
+            #1%
+            \hfill%
+            }}\\
+        \small{%
+            \color{\degreeTextColor}%
+            #2%
+            \hfill}\\
+        \vspace{-3.4ex}%
+        \normalsize{%
+            \color{\degreeFrameColor}%
+            \hrulefill%
+            \hspace{1mm}%
+            \raisebox{-0.5ex}{#4}%
+            }\\
+        \small{%
+            #5 }
+        
+    \end{flushleft}
+\end{minipage}%
+\vspace{1em}
+}
+
+

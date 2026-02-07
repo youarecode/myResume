@@ -1,0 +1,45 @@
+%---------------------------------------------------------
+%	Interfase
+%       Remember use \nextcolumn 
+%           at socialNetwork environment
+%---------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% contact info
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newcommand{\infofield}[2]{\mbox{\makebox[5mm]{\textcolor{accent}{\normalsize #1}}\hspace{0.5em}#2}\vspace{0.2em}\newline}
+
+\newcommand{\infofield}[2]{
+    \item[\large#1]\normalsize#2\hfill}
+    
+
+\newcommand{\email}[1]{%
+    \infofield{\faEnvelope}{\href{mailto:#1}{#1}}}
+\newcommand{\address}[1]{%
+    \infofield{\faAt}{#1}}
+\newcommand{\location}[1]{
+    \infofield{\faMapMarker}{#1}}
+\newcommand{\phone}[1]{%
+    \infofield{\faPhone}{#1}}
+\newcommand{\homepage}[1]{
+    \infofield{\faGlobe}{\href{#1}{#1}}}
+\newcommand{\linkedin}[2]{
+    \infofield{\faLinkedin}{\href{#2}{#1}}}
+\newcommand{\github}[2]{
+    \infofield{\faGithub}{\href{#2}{#1}}}
+\newcommand{\orcid}[2]{
+    \infofield{\aiOrcid}{\href{#2}{#1}}}
+\newcommand{\ads}[2]{
+    \infofield{\aiADS}{\href{#2}{#1}}}
+
+
+\newenvironment{socialNetworks}{
+    \TextSeparator{Contact}\\
+    % \medskip
+    %\begin{doubleColumns}
+    \begin{tripleColumns}
+    }{
+    %\end{doubleColumns}
+    \end{tripleColumns}
+}
+

@@ -1,0 +1,44 @@
+%---------------------------------------------------------
+%	Interfase
+%---------------------------------------------------------
+\newcommand{\tagForeColor}{Black}
+\newcommand{\tagBackColor}{GreenIT}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% squared tag
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\tagValueOneColor}{\tagBackColor!15!White}
+\newcommand{\tagValueTwoColor}{\tagBackColor!30!White}
+\newcommand{\tagValueThreeColor}{\tagBackColor!45!White}
+\newcommand{\tagValueFourColor}{\tagBackColor!60!White}
+\newcommand{\tagValueFiveColor}{\tagBackColor!75!White}
+\newcommand{\tagValueDefaultColor}{White}
+
+\newcounter{tagColorValue}%
+\newcounter{tagColorLineWidth}%
+\newcommand{\tag}[2][0]{% tag, depthValue
+    \setcounter{tagColorValue}{#1}%
+    % \setcounter{tagColorLineWidth}{{\numexpr \thetagColorValue - 0.5}}%
+    \ifthenelse{\thetagColorValue=1}{%
+        \def\tagColor{\tagValueOneColor}%
+        % \setcounter{tagColorLineWidth}{}%
+        }{%
+    \ifthenelse{\thetagColorValue=2}{%
+        \def\tagColor{\tagValueTwoColor}%
+        }{%
+    \ifthenelse{\thetagColorValue=3}{%
+        \def\tagColor{\tagValueThreeColor}%
+        }{%
+    \ifthenelse{\thetagColorValue=4}{%
+        \def\tagColor{\tagValueFourColor}%
+        }{%
+    \ifthenelse{\thetagColorValue=5}{%
+        \def\tagColor{\tagValueFiveColor}%
+        }{%
+        \def\tagColor{\tagValueDefaultColor}%
+        }}}}}%
+    % \tagColor
+    \tikz[baseline]\node[anchor=base,draw=\tagForeColor,rounded corners,inner xsep=0.75ex,inner ysep =0.75ex,text height=1.5ex,text depth=0.25ex, line width=0.1 mm, fill=\tagColor]{#2};
+}
+

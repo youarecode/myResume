@@ -1,0 +1,25 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% make layout
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% sidebar-body Middle margin
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\makebody}{%
+    \ifthenelse{\boolean{@singleordouble}}
+        {% if single layout, the highlight bar is always left
+            \@highlightbar
+            \hspace{\dimexpr \marginLeft+\marginRight}%
+            \@mainbar
+        }{% if double layout, the highlight bar alternates
+            \ifthispageodd{% if the page is odd, the highlight bar is on the left (as is for single layout)
+                \@highlightbar
+                \hspace{\dimexpr \marginLeft+\marginRight}%
+                \@mainbar
+            }{%  if the page is even, the highlight bar is on the right
+                \@mainbar
+                \hspace{\dimexpr \marginLeft+\marginRight}%
+                \@highlightbar
+            }   
+        }
+}

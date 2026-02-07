@@ -1,0 +1,48 @@
+%---------------------------------------------------------
+%	Interfase
+%---------------------------------------------------------
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% side bar
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{sideBar}{
+\renewcommand{\sectionColor}{\sideBarHighlightColor}
+\renewcommand{\subsectionColor}{\sideBarHighlightColor}
+\renewcommand{\skillSectionColor}{\sideBarHighlightColor}
+\renewcommand{\skillForeColor}{\sideBarTextColor}
+\renewcommand{\sectionLineColor}{\sideBarEmphColor}
+% \newcommand{\itemBulletColor}{\ColorHighlight}
+\begin{tikzpicture}[remember picture,overlay]
+%   \fill[%Main background
+%         fill=\sideBarBackgroundColor, 
+%         shift={(current page.north west)}]
+%             (0,-\paperheight) --
+%             (0,-\angleSize) --
+%             (0\angleSize,0) --
+%             (\paperwidth,0) --
+%             (\paperwidth,-\topHeight-\margin) --
+%             (\sideWidth+2\margin+\angleSize,-\topHeight-\margin) --
+%             (\sideWidth+2\margin,-\topHeight-\margin-\angleSize) --
+%             (\sideWidth+2\margin,-\paperheight) --
+%             cycle;
+%     \end{tikzpicture}%
+    \fill[%side background
+        fill=\sideBarBackgroundColor, 
+        shift={(current page.north west)}]
+            (0,-\paperheight) --
+            (0,-\topHeight+0.5) --
+            (\sideWidth+2.5\margin,-\topHeight+0.5) --
+            (\sideWidth+2\margin,-\topHeight+0.5-0.5\margin) --
+            (\sideWidth+2\margin,-\paperheight) --
+            cycle;
+    \end{tikzpicture}%
+
+    \begin{textblock*}{\sideWidth}(\margin,\topHeight-0\margin)
+    \begin{center}
+    \color{\sideBarTextColor}
+    }{
+    \end{center}
+    \end{textblock*}
+}

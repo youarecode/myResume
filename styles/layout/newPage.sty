@@ -1,0 +1,99 @@
+
+
+\newenvironment{newPage}{
+    % \def\bodyBackgroundColor{#1}
+    % \def\bodyTextColor{#2}
+    % \def\bodyHighlightColor{#3}
+    % \def\bodyEmphColor{#4}
+    % \color{\bodyTextColor}
+
+\renewcommand{\achievementTextColor}{\bodyTextColor}
+\renewcommand{\achievementSecTextColor}{\bodyHighlightColor}
+\renewcommand{\achievementIconColor}{\bodyEmphColor}
+\renewcommand{\achievementHighlightTextColor}{\bodyEmphColor}
+
+\renewcommand{\sectionColor}{\bodyTextColor}
+\renewcommand{\sectionLineColor}{\bodyEmphColor}
+\renewcommand{\subsectionColor}{\bodyHighlightColor}
+
+% \renewcommand{\skillSectionColor}{\sideBarHighlightColor}
+% \renewcommand{\skillForeColor}{\sideBarTextColor}
+% \newcommand{\itemBulletColor}{\ColorHighlight}
+\newpage
+
+\begin{textblock*}{\textwidth}(\margin,\margin)
+\begin{center}
+\color{\bodyTextColor}
+
+}{
+\end{center}
+\end{textblock*}
+}
+
+
+
+\newenvironment{newPageEVEN}{
+\renewcommand{\sectionColor}{\sideBarHighlightColor}
+\renewcommand{\subsectionColor}{\sideBarHighlightColor}
+\renewcommand{\skillSectionColor}{\sideBarHighlightColor}
+\renewcommand{\skillForeColor}{\sideBarTextColor}
+\renewcommand{\sectionLineColor}{\sideBarEmphColor}
+% \newcommand{\itemBulletColor}{\ColorHighlight}
+\newpage
+\begin{tikzpicture}[remember picture,overlay]
+    \fill[%Main background
+        fill=\sideBarBackgroundColor, 
+        shift={(current page.north west)}]
+            (0,-\paperheight) --
+            (0,-\angleSize) --
+            (0\angleSize,0) --
+            (\paperwidth,0) --
+            (\paperwidth,-\topHeight-\margin) --
+            (\sideWidth+2\margin+\angleSize,-\topHeight-\margin) --
+            (\sideWidth+2\margin,-\topHeight-\margin-\angleSize) --
+            (\sideWidth+2\margin,-\paperheight) --
+            cycle;
+    \end{tikzpicture}%
+
+    \begin{textblock*}{\sideWidth}(\margin,\topHeight+\margin)
+    \begin{center}
+    \color{\sideBarTextColor}
+
+    }{
+    \end{center}
+    \end{textblock*}
+}
+
+
+
+\newenvironment{newPageODD}{
+\renewcommand{\sectionColor}{\sideBarHighlightColor}
+\renewcommand{\subsectionColor}{\sideBarHighlightColor}
+\renewcommand{\skillSectionColor}{\sideBarHighlightColor}
+\renewcommand{\skillForeColor}{\sideBarTextColor}
+\renewcommand{\sectionLineColor}{\sideBarEmphColor}
+% \newcommand{\itemBulletColor}{\ColorHighlight}
+\newpage
+\begin{tikzpicture}[remember picture,overlay]
+    \fill[%Main background
+        fill=\sideBarBackgroundColor, 
+        shift={(current page.north west)}]
+            (\paperwidth-\sideWidth-2\margin,-\paperheight) --
+            (\paperwidth-\sideWidth-2\margin,0) --
+            (\paperwidth, 0) --
+            (\paperwidth, -\paperheight) --
+            cycle;
+    \end{tikzpicture}%
+
+    \begin{textblock*}
+    {\sideWidth}(\paperwidth-\sideWidth-\margin,\topHeight+\margin)
+    \begin{center}
+    \color{\sideBarTextColor}
+
+    }{
+    \end{center}
+    \end{textblock*}
+}
+
+
+

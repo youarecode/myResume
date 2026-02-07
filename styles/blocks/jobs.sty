@@ -1,0 +1,155 @@
+% format job/school list
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% set length of date/place column versus position column in fraction of linewidth before linewidth gets redefined in minipages
+\newlength{\jobdateplacelength}
+\newlength{\jobpositionlength}
+\setlength{\jobdateplacelength}{0.4\linewidth}
+\setlength{\jobpositionlength}{0.6\linewidth}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Job
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\job}[4]{%date start - end, 
+                     %Job position, 
+                     %sector, company
+\begin{minipage}[c]{3mm}%
+    \color{\jobFrameColor}\scriptsize\faGraduationCap
+\end{minipage}%
+\hspace{0.5em}%
+\begin{minipage}[t]{\dimexpr \textwidth-0.5em-3mm}%
+    \begin{flushleft}
+        \large{%
+            \textbf{%
+            \color{\jobEmphColor}%
+            #2%
+            \hfill%
+            }}\\
+        \small{%
+            \color{\jobTextColor}%
+            #3%
+            \hfill}\\
+        \vspace{-3.4ex}%
+        \normalsize{%
+            \color{\jobFrameColor}%
+            \hrulefill%
+            \hspace{1mm}%
+            \raisebox{-0.5ex}{#1}%
+            }\\
+        \small{%
+            #4 }
+    \end{flushleft}
+\end{minipage}%
+\vspace{1em}
+}
+
+
+
+
+% \newcommand{\jobb2}[6]{
+%     \begin{minipage}[c]{3mm}%
+%         \color{\jobFrameColor}\scriptsize\faLegal
+%     \end{minipage}%
+%     \hspace{0.5em}%
+%     \begin{minipage}[t]{\dimexpr \textwidth-0.5em-3mm}%
+%         \begin{flushleft}
+%         \large{%
+%             \textbf{%
+%             \color{\jobEmphColor}%
+%             #3%
+%             \hfill%
+%             }}\\
+%         \small{%
+%             \color{\jobTextColor}%
+%             #2%
+%             \hfill}\\
+%         \vspace{-.4ex}%
+%         \normalsize{%
+%             \color{\jobFrameColor}%
+%             \hrulefill%
+%             \hspace{1mm}%
+%             \raisebox{-0.5ex}{#4}%
+%             }\\
+%         \small{%
+%             #5 }
+%     \end{flushleft}
+%     \end{minipage}%
+%     \vspace{1em}
+%     }
+        
+        
+        
+        
+        
+%         \footnotesize
+%         \begin{minipage}[t]{3mm}% wrap marker in minipage to allow multi-line dates
+%             \makebox[3mm][c]{\faCalendar}
+%         \end{minipage}%
+%         \hspace{0.5em}%
+%         \begin{minipage}[t]{\dimexpr \jobdateplacelength-3mm-0.5em}% wrap date in minipage to allow multi-line dates
+%             #1
+%         \end{minipage}%
+%         \par
+%         \vspace{0.1em}
+%         \begin{minipage}[t]{3mm}% wrap marker in minipage to allow multi-line places
+%             \makebox[3mm][c]{\faMapMarker}
+%         \end{minipage}%
+%         \hspace{0.5em}%
+%         \begin{minipage}[t]{\dimexpr \jobdateplacelength-3mm-0.5em}% wrap place in minipage to allow multi-line places
+%             #2
+%         \end{minipage}%
+%     \end{minipage}%
+% }
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    % \begin{minipage}[t]{\jobpositionlength}% minipage for position
+        % {\large \color{emphasis} #3}
+    % \end{minipage}%
+    % \ifstrequal{#4}{}{}{\par \vspace{0.1em} \footnotesize #4}
+    % \par\normalsize
+    % \vspace{0.5em}
+
+
+%%%%%%%% DGREE
+
+% \newcommand{\degree}[4]{%date start - end, 
+%                      %Job position, 
+%                      %sector, company
+% \begin{minipage}[c]{3mm}%
+%     \color{\jobFrameColor}\scriptsize\faGraduationCap
+% \end{minipage}%
+% \hspace{0.5em}%
+% \begin{minipage}[t]{\dimexpr \textwidth-0.5em-3mm}%
+%     \begin{flushleft}
+%         \large{%
+%             \textbf{%
+%             \color{\jobEmphColor}%
+%             #2%
+%             \hfill%
+%             }}\\
+%         \small{%
+%             \color{\jobTextColor}%
+%             #3%
+%             \hfill}\\
+%         \vspace{-.4ex}%
+%         \normalsize{%
+%             \color{\jobFrameColor}%
+%             \hrulefill%
+%             \hspace{1mm}%
+%             \raisebox{-0.5ex}{#1}%
+%             }\\
+%         \small{%
+%             #4 }
+        
+%     \end{flushleft}
+% \end{minipage}%
+% \vspace{1em}
+% }

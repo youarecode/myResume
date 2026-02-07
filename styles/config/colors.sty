@@ -1,0 +1,158 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COLORS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%---------------------------------------------------------
+%	COLOR PALLETE
+%---------------------------------------------------------
+% Gray-scale colors
+\definecolor{white}{HTML}{FFFFFF}
+\definecolor{black}{HTML}{000000}
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{mediumgray}{HTML}{444444}
+\definecolor{gray}{HTML}{5D5D5D}
+% Basic colors
+\definecolor{green}{HTML}{C2E15F}
+\definecolor{orange}{HTML}{FDA333}
+\definecolor{purple}{HTML}{D3A4F9}
+\definecolor{red}{HTML}{FB4485}
+\definecolor{blue}{HTML}{6CE0F1}
+% Text colors
+\definecolor{darktext}{HTML}{414141}
+% Awesome colors
+\definecolor{awesome-emerald}{HTML}{00A388}
+\definecolor{awesome-skyblue}{HTML}{0395DE}
+\definecolor{awesome-red}{HTML}{DC3522}
+\definecolor{awesome-pink}{HTML}{EF4089}
+\definecolor{awesome-orange}{HTML}{FF6138}
+\definecolor{awesome-nephritis}{HTML}{27AE60}
+\definecolor{awesome-concrete}{HTML}{95A5A6}
+\definecolor{awesome-darknight}{HTML}{131A28}
+% spider colors
+\definecolor{Black}{HTML}{212121}
+\definecolor{Grey}{HTML}{AAAAAA}
+\definecolor{White}{HTML}{FFFFFF}
+\definecolor{GreenArmy}{HTML}{252e25}
+\definecolor{GreenIT}{HTML}{4caf50}
+
+%Old theme
+% \definecolor{tag_1}{HTML}{4caf50}
+% \definecolor{tag_2}{HTML}{EF4089}
+% \definecolor{tag_3}{HTML}{FFFF00}
+% \definecolor{tag_4}{HTML}{0395DE}
+% \definecolor{tag_5}{HTML}{4caf50}
+% \definecolor{tag_6}{HTML}{EF4089}
+% \definecolor{tag_7}{HTML}{FFFF00}
+% \definecolor{tag_8}{HTML}{0395DE}
+
+\definecolor{tag_1}{HTML}{B3FFC1} % Green
+\definecolor{tag_2}{HTML}{FFC8B4} % pink
+\definecolor{tag_3}{HTML}{C1B5C8} % Lavender
+\definecolor{tag_4}{HTML}{AEC8E8} % Blue
+\definecolor{tag_5}{HTML}{FEDC56} % Yellow
+\definecolor{tag_6}{HTML}{FFFF99} % yellow
+\definecolor{tag_7}{HTML}{D4A2A2} % Dusty Rose
+\definecolor{tag_8}{HTML}{27AE60} % purple
+
+
+
+
+
+%---------------------------------------------------------
+%	THEMES (Colors palletes)
+%---------------------------------------------------------
+
+\newcommand{\topTheme}[5]{
+    \def\topBackgroundColor{#1}
+    \def\topTextColor{#2}
+    \def\topTextSecColor{#3}
+    \def\topHighlightColor{#4}
+    \def\topEmphColor{#5}
+}
+
+\newcommand{\bodyTheme}[4]{
+    \def\bodyBackgroundColor{#1}
+    \def\bodyTextColor{#2}
+    \def\bodyHighlightColor{#3}
+    \def\bodyEmphColor{#4}
+    \color{\bodyTextColor} % Default text color
+}
+
+\newcommand{\sidebarTheme}[6]{
+    \newcommand\sideBarBackgroundColor{#1}
+    \newcommand\sideBarTextColor{#2}
+    \newcommand\sideBarHighlightColor{#3}
+    \newcommand\sideBarEmphColor{#4}
+
+    \newcommand{\degreeEmphColor}{#5}
+    \newcommand{\jobEmphColor}{#5}
+    \newcommand{\degreeDateColor}{#6}
+    \newcommand{\jobDateColor}{#6}
+}
+
+% \newcommand{\defineCycler}[#10]{
+%     \newcounter{cyclerCounter}
+%     \setcounter{cyclerCounter}{}
+    
+%     \newcommand{\nextCycler}[1]{
+%         \renewcommand{#1}{}
+%         \stepcounter{cyclerCounter}
+%     }    
+% }
+
+
+\colorlet{text}{darkgray}
+\colorlet{graytext}{gray}
+\colorlet{highlightbarcolor}{lightgray}
+\colorlet{headerbarcolor}{darkgray}
+\colorlet{headerfontcolor}{white}
+\colorlet{accent}{awesome-red}
+\colorlet{heading}{black}
+\colorlet{emphasis}{black}
+\colorlet{body}{black}
+
+
+% \topTheme
+%     {Black}
+%     {White}
+%     {Grey}
+%     {GreenIT}
+%     {red}
+% \sidebarTheme
+%     {Black}
+%     {Grey}
+%     {GreenIT}
+%     {accent}
+%     {yellow!70!blue}
+
+\topTheme
+    {Black!3}
+    {Black}
+    {Grey}
+    {GreenIT!50!Black}
+    {red}
+
+\sidebarTheme
+    {Black!5}
+    {Black}
+    {Black}
+    {accent}
+    {GreenIT!50!Black}
+    {red} 
+\bodyTheme
+    {White}
+    {Black}
+    {GreenIT}
+    {awesome-orange}
+
+
+\newcommand{\degreeBackgroundColor}{Black}
+\newcommand{\degreeFrameColor}{GreenIT}
+% \newcommand{\degreeEmphColor}{yellow!10!blue}
+% \newcommand{\degreeEmphColor}{yellow!70!blue}
+\newcommand{\degreeTextColor}{White}
+
+\newcommand{\jobBackgroundColor}{Black}
+\newcommand{\jobFrameColor}{GreenIT}
+% \newcommand{\jobEmphColor}{yellow!10!blue}
+% \newcommand{\jobEmphColor}{yellow!70!blue}
+\newcommand{\jobTextColor}{White}

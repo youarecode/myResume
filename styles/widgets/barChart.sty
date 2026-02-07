@@ -1,0 +1,27 @@
+%---------------------------------------------------------
+%	Interfase
+%---------------------------------------------------------
+\newcommand{\gaugeColor}{GreenIT}
+\newcommand{\barColorOff}{gray}
+\newcommand{\barColorOn}{GreenIT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Skill Gauges
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{SkillGauges}{% Highlight color
+    \begin{tabular}{l l}
+    }{
+    \end{tabular}
+}
+\newcommand{\addGauge}[3][\faSquareO]{% Optional fa symbol | Text | Number of symbols
+    #2 & \foreach \i in{1,...,#3}{\color{\gaugeColor}#1\space} \\
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Skill bar
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\barChart}[2][5]{
+    \foreach \x in {1,...,#1}{%
+      \space{\ifnumgreater{\x}{#2}{\color{\barColorOff}}{\color{\barColorOn}}\faCircle}}
+}
+

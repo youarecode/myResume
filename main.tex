@@ -1,0 +1,44 @@
+\documentclass{styles/myResume}
+
+\newcommand{\lang}{en}
+% \newcommand{\lang}{es}
+
+\begin{document}
+    \pagestyle{empty}
+    \input{1. contact}
+
+    \begin{sideBar}
+        \input{2. education}
+        \vspace{25mm}
+        
+        \input{4. workHistory}
+     %   \vspace{5mm}
+        % \input{6. jobAspiration} 
+        %\vspace{5mm}
+     %   \input{5. socialAbilities}
+    \end{sideBar}
+    
+    \begin{body}
+        \input{3. courses}
+        % \input{7. projects}
+        \input{8. specificSkills}
+    \end{body}
+
+    
+    \begin{newPage}
+        \input{10. moreSkills}
+    %     \input{11. Note}
+    \end{newPage}
+    
+    
+    \begin{newPage}
+        % \input{10. moreSkills}
+         \input{11. Note}
+    \end{newPage}
+    
+    % \begin{bodyODD}
+    %     \input{9. moreSkills}
+    % \end{bodyODD}
+    % \input{10. statistics}
+    % \input{11. publications}
+\end{document}

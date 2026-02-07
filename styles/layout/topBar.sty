@@ -1,0 +1,61 @@
+%---------------------------------------------------------
+%	Interfase
+%---------------------------------------------------------
+\newcommand{\topBarTextColor}{\topTextColor}
+\newcommand{\topBarHighlightColor}{\topHighlightColor}
+
+\newcommand{\photoSize}{\dimexpr \topHeight-\marginBottom-1.25\margin}
+\newcommand{\photo}[2][square]{ %square or circle, path
+    \def\contactPhotoType{#1}
+    \def\contactPhotoPath{#2}
+    \toggletrue{do_photo}
+    }
+
+\newtoggle{do_photo}
+\togglefalse{do_photo}
+
+
+
+%---------------------------------------------------------
+%	layout
+%---------------------------------------------------------
+\newenvironment{topBar}{ 
+    \renewcommand{\itemBulletColor}{\topHighlightColor}
+    \renewcommand{\contactColor}{\topHighlightColor}
+    \renewcommand{\sectionLineColor}{\topHighlightColor}
+    \iftoggle{do_photo}{}{\renewcommand{\photoSize}{-\margin}}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %top background
+    \begin{tikzpicture}[remember picture,overlay]
+        \fill[
+        fill=\topBackgroundColor, 
+        shift={(current page.north west)}]
+            (0, 0) --
+            (\paperwidth, 0) --
+            (\paperwidth, -\topHeight) --
+            (0, -\topHeight) --
+            cycle;
+    \end{tikzpicture}%
+    
+    \begin{textblock*}{\paperwidth-(\photoSize+3\margin)}(\margin,0.5\margin)
+    \begin{center}
+    \color{\topBarTextColor}
+    }{
+    \end{center}
+    \iftoggle{do_photo}{
+        \begin{textblock*}{\photoSize}(\paperwidth-(\photoSize+0.5\margin),\margin)
+            \choosePhoto
+        \end{textblock*}
+        }{}
+    \end{textblock*}
+    }
+
+\newcommand{\choosePhoto}{
+\ifthenelse{\equal{\contactPhotoType}{square}}{%
+    \includegraphics[width=\photoSize]{\contactPhotoPath}%
+    }{%
+    \tikz\path[fill overzoom image={\contactPhotoType}]circle[radius=0.5\photoSize];
+    }
+}
+    
+

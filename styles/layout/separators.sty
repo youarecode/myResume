@@ -1,0 +1,35 @@
+%------------------------------------------------------------
+%	Interfase
+%------------------------------------------------------------
+\newcommand{\sectionLineWidth}{0.35mm}
+\newcommand{\sectionLineColor}{red}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% section line (hrule)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\hrulefill{\leavevmode\leaders\hrule height \sectionLineWidth \hfill\kern\z@} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Text separators
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\TextSeparator}[1]% Text
+{
+    \noindent\makebox[\linewidth]{{\color{\sectionLineColor}\hrulefill}
+    \hspace{1ex}\raisebox{-.4ex}{\textbf{\large{#1}}}
+    \hspace{1ex}{\color{\sectionLineColor}\hrulefill}}
+}
+
+\newcommand{\TextSeparatorBis}[2]% Left text, Right text
+{
+    \noindent\makebox[\linewidth]{\raisebox{-.4ex}{\textbf{\large{#1}}}\hspace{1ex}
+    {\color{\sectionLineColor}\hrulefill}
+    \hspace{1ex}\raisebox{-.4ex}{\textbf{\large{#2}}}}
+}
+
+\newcommand{\SimpleSeparator}%
+{
+    \noindent\makebox[\linewidth]{
+    {\color{\sectionLineColor}\hrulefill}}
+}

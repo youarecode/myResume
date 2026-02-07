@@ -1,0 +1,42 @@
+%---------------------------------------------------------
+%	Interfase
+%---------------------------------------------------------
+\newcommand{\contactColor}{Black}
+\newcommand{\name}[1]{\def\contactName{#1}}
+\newcommand{\jobName}[2]{
+    \def\contactJobDescription{\Large{#1}}
+    \def\contactJobCategory{\Large{#2}}}
+\newcommand{\degreeName}[1]{
+    \def\degreeName{\Large{#1}}
+    }
+
+%\begin{topBar}
+%   \contactBlock
+%\end{topBar}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\contactBlock}{%Name, profession, age
+    \makeContactName\\
+    \bigskip
+    % \medskip
+    % {\HUGE{\textbf{\color{\topBarHighlightColor}
+    % \makeContactName}}\\
+    % \bigskip
+    \begin{minipage}{15cm}
+    \degreeName\\
+    \contactJobDescription
+    \end{minipage}
+    \hfill
+    % \bigskip
+    \contactJobCategory
+    \bigskip
+}
+
+\newcommand{\makeContactName}{
+    {\Huge\bfseries\color{\contactColor}\MakeUppercase{
+        \contactName}\hfill}
+}
