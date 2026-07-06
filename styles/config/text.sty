@@ -9,7 +9,7 @@
 
 % \usepackage{roboto}
 % \RequirePackage[scaled]{helvet}
-\setmainfont{Carlito}
+% \setmainfont{Carlito}
 % \renewcommand*\familydefault{\sfdefault} % Force sans-serif at any font used
 
 
@@ -31,9 +31,11 @@
 %     ItalicFont = Montserrat-Italic,
 %     Scale = 1.3]
 
-\setmainfont[
-    UprightFont = Montserrat-Regular ,
-    BoldFont = Montserrat-Bold ,
-    ItalicFont = Montserrat-Italic,
-    Scale = 1
-    ]{mont}
+\setmainfont{Montserrat}[
+    Path = styles/fonts/,
+    Extension = .ttf,
+    UprightFont = *-Regular,
+    BoldFont = *-Bold,
+    ItalicFont = *-Italic,
+    BoldItalicFont = *-BoldItalic,
+    ]
