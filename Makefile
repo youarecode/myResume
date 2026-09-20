@@ -19,11 +19,11 @@
 help:
 	@echo "Available commands:"
 	@echo "BUILD:"
-	@echo "  make pdf          → compile main.tex to PDF with XeLaTeX"
-	@echo "  make watch        → recompile on every save (Ctrl+C to stop)"
+	@echo "  make pdf          → compile main_es.pdf and main_en.pdf with XeLaTeX"
+	@echo "  make watch        → recompile main.tex (Spanish) on every save (Ctrl+C to stop)"
 	@echo "CLEAN:"
 	@echo "  make clean        → remove LaTeX auxiliary files"
-	@echo "  make distclean    → remove auxiliary files and main.pdf"
+	@echo "  make distclean    → remove auxiliary files and both PDFs"
 	@echo "SETUP:"
 	@echo "  make install-deps → install required TeX Live packages (sudo)"
 

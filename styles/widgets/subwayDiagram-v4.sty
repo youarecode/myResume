@@ -1,0 +1,319 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Horizontal Timeline by Year with Quarters
+% Single tikzpicture, fixed row pitch per year (deterministic
+% height regardless of content) so multi-year spans and empty
+% years never collide or misalign.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% --- row geometry (all in cm, one shared coordinate system) ---
+\def\tlLabelX{-0.55}   % x anchor (east) for the year number
+\def\tlWideH{1.4}      % row pitch: year with quarter entries
+\def\tlNarrowH{0.75}   % row pitch: year with only a span block
+
+\newcounter{tlStackA}
+\newcounter{tlStackB}
+\newcounter{tlStackC}
+\newcounter{tlStackD}
+\newcounter{tlJobStackA}
+\newcounter{tlJobStackB}
+\newcounter{tlJobStackC}
+\newcounter{tlJobStackD}
+\newcounter{tlBlockStack} % full-width blocks placed so far this row
+\newcounter{tlBookLine}   % books placed so far this row -- each gets its own line
+
+% Row priority, top to bottom: 1 job, 2 education span, 3 course,
+% 4 book. Jobs sit in their own tier above everything else; \tlJobOffset
+% is how far that tier pushes the education/course/book tiers down.
+% \tlCourseOffset does the same for the book tier sitting below courses.
+
+\newenvironment{timelineChart}{%
+    \def\tlY{0}%
+    \pgfmathsetmacro{\tlRulerW}{\linewidth/1cm}% fill the column's real width
+    \noindent
+    \begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
+}{%
+    \end{tikzpicture}%
+}
+
+% \tlYear{year} - begin a row that will carry quarter entries
+\newcommand{\tlYear}[1]{%
+    \setcounter{tlStackA}{0}\setcounter{tlStackB}{0}%
+    \setcounter{tlStackC}{0}\setcounter{tlStackD}{0}%
+    \setcounter{tlJobStackA}{0}\setcounter{tlJobStackB}{0}%
+    \setcounter{tlJobStackC}{0}\setcounter{tlJobStackD}{0}%
+    \setcounter{tlBookLine}{0}%
+    \setcounter{tlBlockStack}{0}%
+    \def\tlJobOffset{0}%
+    \def\tlCourseOffset{0}%
+    \node[anchor=east, font=\fontsize{7}{8}\selectfont\bfseries, color=gray!70]
+        at (\tlLabelX,\tlY) {#1};%
+    \draw[line width=1.2pt, gray!30] (0,\tlY) -- (\tlRulerW,\tlY);
+    \draw[line width=0.8pt, gray!40] (0,\tlY-0.1) -- (0,\tlY+0.1);
+    \draw[line width=0.8pt, gray!40] (\tlRulerW*0.25,\tlY-0.1) -- (\tlRulerW*0.25,\tlY+0.1);
+    \draw[line width=0.8pt, gray!40] (\tlRulerW*0.5,\tlY-0.1) -- (\tlRulerW*0.5,\tlY+0.1);
+    \draw[line width=0.8pt, gray!40] (\tlRulerW*0.75,\tlY-0.1) -- (\tlRulerW*0.75,\tlY+0.1);
+    \draw[line width=0.8pt, gray!40] (\tlRulerW,\tlY-0.1) -- (\tlRulerW,\tlY+0.1);
+}
+
+% \tlYearEmpty{year} - a year with nothing to show: thin stub row
+\newcommand{\tlYearEmpty}[1]{%
+    \setcounter{tlBlockStack}{0}%
+    \setcounter{tlBookLine}{0}%
+    \def\tlJobOffset{0}%
+    \def\tlCourseOffset{0}%
+    \node[anchor=east, font=\fontsize{6}{7}\selectfont\bfseries, color=gray!50]
+        at (\tlLabelX,\tlY) {#1};%
+    \draw[line width=0.6pt, gray!25] (0,\tlY) -- (1.2,\tlY);
+}
+
+% \tlEntry{quarter}{color}{title} - quarter = 1..4. For courses: sits
+% below the job tier and below any full-width block. One line only (the
+% legend already says "course"); stacks tighter than the 2-line tiers.
+% Updates \tlCourseOffset so the book tier renders below it in turn.
+\newcommand{\tlEntry}[3]{%
+    \ifcase#1\relax
+    \or \pgfmathsetmacro{\qx}{\tlRulerW*0.125}\stepcounter{tlStackA}\edef\qs{\value{tlStackA}}%
+    \or \pgfmathsetmacro{\qx}{\tlRulerW*0.375}\stepcounter{tlStackB}\edef\qs{\value{tlStackB}}%
+    \or \pgfmathsetmacro{\qx}{\tlRulerW*0.625}\stepcounter{tlStackC}\edef\qs{\value{tlStackC}}%
+    \or \pgfmathsetmacro{\qx}{\tlRulerW*0.875}\stepcounter{tlStackD}\edef\qs{\value{tlStackD}}%
+    \fi%
+    \pgfmathsetmacro{\qy}{\tlY-0.5-\tlJobOffset-\value{tlBlockStack}*0.45-(\qs-1)*0.35}%
+    \node[
+        rounded corners=0.5mm,
+        draw=#2!45!black,
+        line width=0.4pt,
+        fill=#2,
+        fill opacity=0.35,
+        text opacity=1,
+        minimum width=3mm,
+        minimum height=3mm,
+        inner sep=1pt,
+        text width=1.8cm,
+        font=\fontsize{6}{7}\selectfont,
+        align=center
+    ] at (\qx,\qy) {{\bfseries\tiny #3}};%
+    \pgfmathsetmacro{\tlCourseMax}{max(\value{tlStackA},\value{tlStackB},\value{tlStackC},\value{tlStackD})}%
+    \pgfmathsetmacro{\tlCourseOffset}{\tlCourseMax*0.35}%
+}
+
+% \tlJobEntry{quarter}{color}{title}{subtitle} - same shape as \tlEntry,
+% for jobs. Top-priority tier: always sits right below the ruler, above
+% education/course/book. Also sets \tlJobOffset so the rest of the row
+% renders below whatever depth the job tier reached.
+\newcommand{\tlJobEntry}[4]{%
+    \ifcase#1\relax
+    \or \pgfmathsetmacro{\qx}{\tlRulerW*0.125}\stepcounter{tlJobStackA}\edef\qs{\value{tlJobStackA}}%
+    \or \pgfmathsetmacro{\qx}{\tlRulerW*0.375}\stepcounter{tlJobStackB}\edef\qs{\value{tlJobStackB}}%
+    \or \pgfmathsetmacro{\qx}{\tlRulerW*0.625}\stepcounter{tlJobStackC}\edef\qs{\value{tlJobStackC}}%
+    \or \pgfmathsetmacro{\qx}{\tlRulerW*0.875}\stepcounter{tlJobStackD}\edef\qs{\value{tlJobStackD}}%
+    \fi%
+    \pgfmathsetmacro{\qy}{\tlY-0.5-(\qs-1)*0.45}%
+    \node[
+        rounded corners=0.5mm,
+        draw=#2!80!black,
+        line width=0.5pt,
+        fill=#2,
+        fill opacity=0.75,
+        text opacity=1,
+        minimum width=3mm,
+        minimum height=4mm,
+        inner sep=1pt,
+        text width=1.8cm,
+        font=\fontsize{6}{7}\selectfont,
+        align=center
+    ] at (\qx,\qy) {%
+        {\bfseries\tiny #3}\\[-0.2ex]%
+        {\fontsize{5}{6}\selectfont\itshape #4}%
+    };%
+    \pgfmathsetmacro{\tlJobMax}{max(\value{tlJobStackA},\value{tlJobStackB},\value{tlJobStackC},\value{tlJobStackD})}%
+    \pgfmathsetmacro{\tlJobOffset}{\tlJobMax*0.45}%
+}
+
+% \tlEntrySpan{qStart}{qEnd}{color}{title} - like \tlEntry but wide
+% enough to cover several quarters. Stacks correctly against anything
+% else (in this same tier) touching any of those quarters.
+\newcommand{\tlEntrySpan}[4]{%
+    \pgfmathsetmacro{\qxa}{\tlRulerW*(#1-1)/4}%
+    \pgfmathsetmacro{\qxb}{\tlRulerW*#2/4}%
+    \pgfmathsetmacro{\qcx}{(\qxa+\qxb)/2}%
+    \pgfmathsetmacro{\qw}{\qxb-\qxa-0.12}%
+    \pgfmathtruncatemacro{\qs}{1+max(
+        ((#1<2)*(#2>0))*\value{tlStackA},
+        ((#1<3)*(#2>1))*\value{tlStackB},
+        ((#1<4)*(#2>2))*\value{tlStackC},
+        (#2>3)*\value{tlStackD})}%
+    \ifnum#1<2 \setcounter{tlStackA}{\qs}\fi
+    \ifnum#1<3 \ifnum#2>1 \setcounter{tlStackB}{\qs}\fi\fi
+    \ifnum#1<4 \ifnum#2>2 \setcounter{tlStackC}{\qs}\fi\fi
+    \ifnum#2>3 \setcounter{tlStackD}{\qs}\fi
+    \pgfmathsetmacro{\qy}{\tlY-0.5-\tlJobOffset-\value{tlBlockStack}*0.45-(\qs-1)*0.35}%
+    \node[
+        rounded corners=0.5mm,
+        draw=#3!45!black,
+        line width=0.4pt,
+        fill=#3,
+        fill opacity=0.35,
+        text opacity=1,
+        minimum height=3mm,
+        inner sep=1pt,
+        text width=\qw cm,
+        font=\fontsize{6}{7}\selectfont,
+        align=center
+    ] at (\qcx,\qy) {{\bfseries\tiny #4}};%
+    \pgfmathsetmacro{\tlCourseMax}{max(\value{tlStackA},\value{tlStackB},\value{tlStackC},\value{tlStackD})}%
+    \pgfmathsetmacro{\tlCourseOffset}{\tlCourseMax*0.35}%
+}
+
+% \tlEntryMonthSpan{monthStart}{monthEnd}{color}{title} - like
+% \tlEntrySpan but month-precise (1-12), for a course that starts/ends
+% mid-quarter instead of filling it (same reasoning as
+% \tlBookEntrySpan). Still stacks in the course tier: it occupies every
+% quarter tier its month range touches, so it won't overlap a
+% \tlEntry/\tlEntrySpan sharing any of those quarters.
+\newcommand{\tlEntryMonthSpan}[4]{%
+    \pgfmathsetmacro{\qxa}{\tlRulerW*(#1-1)/12}%
+    \pgfmathsetmacro{\qxb}{\tlRulerW*#2/12}%
+    \pgfmathsetmacro{\qcxRaw}{(\qxa+\qxb)/2}%
+    \pgfmathsetmacro{\qw}{max(\qxb-\qxa-0.06, 1.7)}%
+    \pgfmathsetmacro{\qcx}{max(\qw/2, min(\qcxRaw, \tlRulerW-\qw/2))}%
+    \pgfmathtruncatemacro{\qStartQ}{ceil(#1/3)}%
+    \pgfmathtruncatemacro{\qEndQ}{ceil(#2/3)}%
+    \pgfmathtruncatemacro{\qs}{1+max(
+        ((\qStartQ<2)*(\qEndQ>0))*\value{tlStackA},
+        ((\qStartQ<3)*(\qEndQ>1))*\value{tlStackB},
+        ((\qStartQ<4)*(\qEndQ>2))*\value{tlStackC},
+        (\qEndQ>3)*\value{tlStackD})}%
+    \ifnum\qStartQ<2 \setcounter{tlStackA}{\qs}\fi
+    \ifnum\qStartQ<3 \ifnum\qEndQ>1 \setcounter{tlStackB}{\qs}\fi\fi
+    \ifnum\qStartQ<4 \ifnum\qEndQ>2 \setcounter{tlStackC}{\qs}\fi\fi
+    \ifnum\qEndQ>3 \setcounter{tlStackD}{\qs}\fi
+    \pgfmathsetmacro{\qy}{\tlY-0.5-\tlJobOffset-\value{tlBlockStack}*0.45-(\qs-1)*0.35}%
+    \node[
+        rounded corners=0.5mm,
+        draw=#3!45!black,
+        line width=0.4pt,
+        fill=#3,
+        fill opacity=0.35,
+        text opacity=1,
+        minimum height=3mm,
+        inner sep=1pt,
+        text width=\qw cm,
+        font=\fontsize{6}{7}\selectfont,
+        align=center
+    ] at (\qcx,\qy) {{\bfseries\tiny #4}};%
+    \pgfmathsetmacro{\tlCourseMax}{max(\value{tlStackA},\value{tlStackB},\value{tlStackC},\value{tlStackD})}%
+    \pgfmathsetmacro{\tlCourseOffset}{\tlCourseMax*0.35}%
+}
+
+% \tlJobEntrySpan{qStart}{qEnd}{color}{title}{subtitle} - \tlEntrySpan's
+% job-tier counterpart (e.g. a still-running job spanning quarters).
+\newcommand{\tlJobEntrySpan}[5]{%
+    \pgfmathsetmacro{\qxa}{\tlRulerW*(#1-1)/4}%
+    \pgfmathsetmacro{\qxb}{\tlRulerW*#2/4}%
+    \pgfmathsetmacro{\qcx}{(\qxa+\qxb)/2}%
+    \pgfmathsetmacro{\qw}{\qxb-\qxa-0.12}%
+    \pgfmathtruncatemacro{\qs}{1+max(
+        ((#1<2)*(#2>0))*\value{tlJobStackA},
+        ((#1<3)*(#2>1))*\value{tlJobStackB},
+        ((#1<4)*(#2>2))*\value{tlJobStackC},
+        (#2>3)*\value{tlJobStackD})}%
+    \ifnum#1<2 \setcounter{tlJobStackA}{\qs}\fi
+    \ifnum#1<3 \ifnum#2>1 \setcounter{tlJobStackB}{\qs}\fi\fi
+    \ifnum#1<4 \ifnum#2>2 \setcounter{tlJobStackC}{\qs}\fi\fi
+    \ifnum#2>3 \setcounter{tlJobStackD}{\qs}\fi
+    \pgfmathsetmacro{\qy}{\tlY-0.5-(\qs-1)*0.45}%
+    \node[
+        rounded corners=0.5mm,
+        draw=#3!80!black,
+        line width=0.5pt,
+        fill=#3,
+        fill opacity=0.75,
+        text opacity=1,
+        minimum height=4mm,
+        inner sep=1pt,
+        text width=\qw cm,
+        font=\fontsize{6}{7}\selectfont,
+        align=center
+    ] at (\qcx,\qy) {%
+        {\bfseries\tiny #4}\\[-0.2ex]%
+        {\fontsize{5}{6}\selectfont\itshape #5}%
+    };%
+    \pgfmathsetmacro{\tlJobMax}{max(\value{tlJobStackA},\value{tlJobStackB},\value{tlJobStackC},\value{tlJobStackD})}%
+    \pgfmathsetmacro{\tlJobOffset}{\tlJobMax*0.45}%
+}
+
+% \tlBookEntrySpan{monthStart}{monthEnd}{color}{title} - a book sized to
+% its real reading period, month-precise (1-12 within the year), not
+% snapped to a whole trimester. Bottom tier: renders below jobs,
+% education spans and courses. One line only (the legend already says
+% "book"). Every call reserves its own line, regardless of whether it
+% overlaps another book -- simpler and always collision-free, at the
+% cost of not repacking non-overlapping books onto a shared line.
+\newcommand{\tlBookEntrySpan}[4]{%
+    \pgfmathsetmacro{\qxa}{\tlRulerW*(#1-1)/12}%
+    \pgfmathsetmacro{\qxb}{\tlRulerW*#2/12}%
+    \pgfmathsetmacro{\qcxRaw}{(\qxa+\qxb)/2}%
+    % a book spanning just 1-2 months is too narrow to hold its own
+    % title; widen it (visually, not in any displayed date) so the text
+    % stays inside the box instead of spilling out of it.
+    \pgfmathsetmacro{\qw}{max(\qxb-\qxa-0.06, 1.7)}%
+    % if that widening would push the box past either edge of the
+    % column (e.g. a book landing in December or January), slide its
+    % center back in so the whole box stays inside the ruler.
+    \pgfmathsetmacro{\qcx}{max(\qw/2, min(\qcxRaw, \tlRulerW-\qw/2))}%
+    \stepcounter{tlBookLine}%
+    \pgfmathsetmacro{\qy}{\tlY-0.5-\tlJobOffset-\value{tlBlockStack}*0.45-\tlCourseOffset-(\value{tlBookLine}-1)*0.35}%
+    \node[
+        rounded corners=0.5mm,
+        draw=#3!45!black,
+        line width=0.4pt,
+        fill=#3,
+        fill opacity=0.35,
+        text opacity=1,
+        minimum height=3mm,
+        inner sep=1pt,
+        text width=\qw cm,
+        font=\fontsize{6}{7}\selectfont,
+        align=center
+    ] at (\qcx,\qy) {{\bfseries\tiny #4}};%
+}
+
+% \tlSpanBlock{color}{title} - full-width Gantt block for this row,
+% styled like \tlEntry. Call once per row a multi-year span covers,
+% right after \tlYear/\tlYearEmpty and before any \tlEntry: it
+% stacks below any full-width block already placed this row, and
+% pushes quarter entries further down in turn.
+\newcommand{\tlSpanBlock}[2]{%
+    \pgfmathsetmacro{\qy}{\tlY-0.5-\tlJobOffset-\value{tlBlockStack}*0.45}%
+    \node[
+        rounded corners=0.5mm,
+        draw=#1!45!black,
+        line width=0.4pt,
+        fill=#1,
+        fill opacity=0.35,
+        text opacity=1,
+        minimum height=4mm,
+        inner sep=1pt,
+        text width=\tlRulerW cm,
+        font=\fontsize{6}{7}\selectfont\bfseries,
+        align=center
+    ] at (\tlRulerW/2,\qy) {#2};%
+    \stepcounter{tlBlockStack}%
+}
+
+% \tlLegendItem{color}{label} - small swatch + label explaining what a
+% tier's color means (job/education/course/book). Meant to be chained
+% with \quad between calls, right before \begin{timelineChart}.
+\newcommand{\tlLegendItem}[2]{%
+    \tikz[baseline=-0.4ex]\node[rounded corners=0.4mm,draw=#1!70!black,line width=0.4pt,fill=#1,fill opacity=0.6,minimum width=2.8mm,minimum height=2.8mm,inner sep=0pt]{};\,#2%
+}
+
+% \tlRowEnd[height] / \tlRowEndNarrow - advance the cursor to the next
+% row. Default height fits one line of quarter entries; rows stacking
+% several tiers deep (jobs + many overlapping books, etc.) need an
+% explicit taller height, e.g. \tlRowEnd[2.6].
+\newcommand{\tlRowEnd}[1][\tlWideH]{\pgfmathsetmacro{\tlY}{\tlY-#1}}
+\newcommand{\tlRowEndNarrow}{\pgfmathsetmacro{\tlY}{\tlY-\tlNarrowH}}

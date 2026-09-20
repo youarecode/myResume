@@ -1,0 +1,103 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Timeline (vertical line with horizontal rows)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{tikz}
+
+\newenvironment{timelineVertical}{%
+}{%
+}
+
+% \timelineYear{year}
+\newcommand{\timelineYear}[1]{%
+    \par\vspace{0.2cm}\noindent%
+    {\fontsize{7}{8}\selectfont\bfseries\color{gray!70}#1}\hspace{0.4cm}%
+}
+
+% \timelineItem[color]{title}{subtitle}
+\newcommand{\timelineItem}[3][GreenIT]{%
+    \tikz[baseline=(box.base), inner sep=0pt, outer sep=0pt]{%
+        \node[
+            rounded corners=0.5mm,
+            draw=#1!70!black,
+            line width=0.4pt,
+            fill=#1,
+            fill opacity=0.55,
+            text opacity=1,
+            minimum width=3mm,
+            minimum height=3mm,
+            inner sep=1pt,
+            text width=1.3cm,
+            font=\fontsize{6}{7}\selectfont,
+            align=center,
+            name=box
+        ] {%
+            {\bfseries\tiny #2}\\[-0.3ex]%
+            {\fontsize{5}{6}\selectfont\itshape #3}%
+        };%
+    }%
+    \hspace{0.08cm}%
+}
+
+% \timelineJobSpan[color]{title}{subtitle}
+\newcommand{\timelineJobSpan}[3][GreenIT]{%
+    \tikz[baseline=(box.base), inner sep=0pt, outer sep=0pt]{%
+        \node[
+            rounded corners=0.5mm,
+            draw=#1!70!black,
+            line width=0.4pt,
+            fill=#1,
+            fill opacity=0.55,
+            text opacity=1,
+            minimum width=3mm,
+            minimum height=5mm,
+            inner sep=1pt,
+            text width=1.3cm,
+            font=\fontsize{6}{7}\selectfont,
+            align=center,
+            name=box
+        ] {%
+            {\bfseries\tiny #2}\\[-0.3ex]%
+            {\fontsize{5}{6}\selectfont\itshape #3}%
+        };%
+    }%
+    \hspace{0.08cm}%
+}
+
+% \timelineRowEnd - dibuja línea conectora al final de la fila
+\newcommand{\timelineRowEnd}{%
+    \par%
+    \noindent\makebox[\linewidth]{%
+        \tikz[inner sep=0pt, outer sep=0pt]{%
+            \draw[line width=1.2pt, gray!25] (0,0.08) -- (\linewidth, 0.08);%
+        }%
+    }%
+    \vspace{0.05cm}%
+}
+
+% Legend items
+\newcommand{\timelineLegendItem}[2]{%
+    \tikz[baseline=-0.5ex]\node[
+        rounded corners=0.4mm,
+        draw=#1!70!black,
+        line width=0.4pt,
+        fill=#1,
+        fill opacity=0.55,
+        minimum width=3.2mm,
+        minimum height=3.2mm,
+        inner sep=0pt
+    ]{};\,#2%
+}
+
+\newcommand{\timelineLegendSpanItem}[2]{%
+    \tikz[baseline=-0.5ex]\node[
+        rounded corners=0.5mm,
+        draw=#1!70!black,
+        line width=0.4pt,
+        fill=#1,
+        fill opacity=0.55,
+        minimum width=3.2mm,
+        minimum height=4.6mm,
+        inner sep=0pt
+    ]{};\,#2%
+}

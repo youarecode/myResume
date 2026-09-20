@@ -1,0 +1,30 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% book review card
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \bookCard{cover}{title}{pages/difficulty}{stars}{author}{date}{description}{opinion}
+% opinion may be empty -- only rendered when non-empty.
+\newlength{\bookcardtextwidth}
+\newcommand{\bookCard}[8]{%
+\begin{tcolorbox}[colback=yellow!25!white,colframe=yellow!55!black,boxrule=0.6pt,arc=2mm,left=2mm,right=2mm,top=1.5mm,bottom=1.5mm]
+\setlength{\bookcardtextwidth}{\dimexpr\linewidth-19mm\relax}
+\renewcommand{\arraystretch}{1}
+\begin{tabular}{@{}m{15mm}m{\bookcardtextwidth}@{}}
+#1 &
+\textbf{#2} {\small(#3)} \hfill {\small\color{awesome-orange}#4}\newline
+\textit{#5} \hfill \textbf{#6}\newline
+#7
+\ifthenelse{\equal{#8}{}}{}{\newline\newline{\small\itshape ``#8''}}
+\end{tabular}
+\end{tcolorbox}
+\smallskip
+}
+
+% \bookCover{content} -- the tabular's m{} column centers this vertically already.
+\newcommand{\bookCover}[1]{\centering #1}
+\newcommand{\bookNoCover}{%
+    \tikz\node[draw=gray,line width=0.5pt,fill=gray!12,minimum width=15mm,minimum height=20mm,align=center,font=\footnotesize\color{gray}]{\faBook};%
+}
+\newcommand{\fivestars}{\faStar\faStar\faStar\faStar\faStar}
+\newcommand{\twostars}{\faStar\faStar\faStarO\faStarO\faStarO}
+\newcommand{\fourstars}{\faStar\faStar\faStar\faStar\faStarO}

@@ -1,0 +1,86 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% subway-style career timeline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{subwaystopnum}
+\newlength{\subwayaxisoffset}
+\setlength{\subwayaxisoffset}{0.62\sideWidth}
+\newlength{\subwaylabelwidth}
+\setlength{\subwaylabelwidth}{\dimexpr\subwayaxisoffset-7mm\relax}
+\def\subwaydefaultgap{3mm}
+\def\subwayNextGap{\subwaydefaultgap}
+
+\newenvironment{subwayLine}{%
+    \setcounter{subwaystopnum}{0}%
+    \def\subwayNextGap{\subwaydefaultgap}%
+    \begin{tikzpicture}[remember picture]
+}{%
+    \ifnum\thesubwaystopnum>1
+        \draw[gray!45,line width=0.5pt] ([xshift=\subwayaxisoffset]subwaystop1) -- ([xshift=\subwayaxisoffset]subwaystop\thesubwaystopnum);
+    \fi
+    \end{tikzpicture}%
+}
+
+% \subwaygap{Xmm} -- overrides the gap BEFORE the next entry only (elapsed
+% time since the previous one), so entries separated by more real time end
+% up visibly further apart; resets to the default after being consumed.
+\newcommand{\subwaygap}[1]{\def\subwayNextGap{#1}}
+
+% every entry advances using NODE-relative positioning ("below=of"), which
+% auto-sizes to each node's real height -- this is what actually prevents
+% overlap, regardless of how tall a given card or its label turns out to be.
+% \subwaystop[color]{title}{date/subtitle} -- a point-in-time entry (card)
+\newcommand{\subwaystop}[3][GreenIT]{%
+    \stepcounter{subwaystopnum}%
+    \edef\subwayCurr{subwaystop\thesubwaystopnum}%
+    \ifnum\thesubwaystopnum=1
+        \node[rounded corners=0.6mm,draw=#1!70!black,line width=0.5pt,fill=#1,fill opacity=0.55,text opacity=1,minimum width=4.6mm,minimum height=4.6mm,inner sep=0pt] (\subwayCurr) at (0,0) {};
+    \else
+        \node[rounded corners=0.6mm,draw=#1!70!black,line width=0.5pt,fill=#1,fill opacity=0.55,text opacity=1,minimum width=4.6mm,minimum height=4.6mm,inner sep=0pt,below=\subwayNextGap\space of \subwayPrevStop] (\subwayCurr) {};
+        \draw[line width=0.8pt,gray!55] (\subwayPrevStop) -- (\subwayCurr);
+        \def\subwayNextGap{\subwaydefaultgap}%
+    \fi
+    \node[anchor=west,align=left,inner sep=0pt,text width=\subwaylabelwidth] at ([xshift=2.8mm]\subwayCurr.east) {%
+        {\scriptsize\bfseries #2}\\[-0.3ex]
+        {\fontsize{6}{7}\selectfont\itshape #3}%
+    };
+    \xdef\subwayPrevStop{\subwayCurr}%
+}
+
+% \subwayjobspan[color]{title}{date-range}{height} -- a job/duration entry: a
+% card whose HEIGHT is proportional to how long it actually lasted, so a
+% one-month gig and an eight-month role don't read as the same size.
+\newcommand{\subwayjobspan}[4][GreenIT]{%
+    \stepcounter{subwaystopnum}%
+    \edef\subwayCurr{subwaystop\thesubwaystopnum}%
+    \ifnum\thesubwaystopnum=1
+        \node[rounded corners=0.8mm,draw=#1!70!black,line width=0.5pt,fill=#1,fill opacity=0.55,text opacity=1,minimum width=4.6mm,minimum height=#4,inner sep=0pt] (\subwayCurr) at (0,0) {};
+    \else
+        \node[rounded corners=0.8mm,draw=#1!70!black,line width=0.5pt,fill=#1,fill opacity=0.55,text opacity=1,minimum width=4.6mm,minimum height=#4,inner sep=0pt,below=\subwayNextGap\space of \subwayPrevStop] (\subwayCurr) {};
+        \draw[line width=0.8pt,gray!55] (\subwayPrevStop) -- (\subwayCurr);
+        \def\subwayNextGap{\subwaydefaultgap}%
+    \fi
+    \node[anchor=west,align=left,inner sep=0pt,text width=\subwaylabelwidth] at ([xshift=2.8mm]\subwayCurr.east) {%
+        {\scriptsize\bfseries #2}\\[-0.3ex]
+        {\fontsize{6}{7}\selectfont\itshape #3}%
+    };
+    \xdef\subwayPrevStop{\subwayCurr}%
+}
+
+% \subwayyeartick{year} -- small tick + label on the year axis, at the height
+% of whichever entry was placed last (call right after the first/topmost
+% entry of that year, since the list runs newest-first).
+\newcommand{\subwayyeartick}[1]{%
+    \draw[gray!55,line width=0.6pt] ([xshift=\subwayaxisoffset-1mm]\subwayPrevStop) -- ([xshift=\subwayaxisoffset+1mm]\subwayPrevStop);
+    \node[anchor=west,font=\fontsize{6}{7}\selectfont\bfseries,text=gray!70] at ([xshift=\subwayaxisoffset+1.6mm]\subwayPrevStop) {#1};
+}
+
+% \subwaylegenditem{color}{label} -- small inline legend card (point-style)
+\newcommand{\subwaylegenditem}[2]{%
+    \tikz[baseline=-0.5ex]\node[rounded corners=0.4mm,draw=#1!70!black,line width=0.4pt,fill=#1,fill opacity=0.55,minimum width=3.2mm,minimum height=3.2mm,inner sep=0pt]{};\,#2%
+}
+
+% \subwaylegendspanitem{color}{label} -- small inline legend card (span-style)
+\newcommand{\subwaylegendspanitem}[2]{%
+    \tikz[baseline=-0.5ex]\node[rounded corners=0.5mm,draw=#1!70!black,line width=0.4pt,fill=#1,fill opacity=0.55,minimum width=3.2mm,minimum height=4.6mm,inner sep=0pt]{};\,#2%
+}

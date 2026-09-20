@@ -1,8 +1,24 @@
+% corner accents echoing the cover's frame -- two small touches (bottom
+% right cut, bottom left squared); top corners left open so it never reads
+% as a fully closed box.
+\begin{tikzpicture}[remember picture,overlay]
+    \draw[draw=\bodyTextColor, shift={(current page.north west)}, very thick]
+        (\paperwidth-\margin,-\paperheight+\margin+\angleSize+6mm) --
+        (\paperwidth-\margin,-\paperheight+\margin+\angleSize) --
+        (\paperwidth-\margin-\angleSize,-\paperheight+\margin) --
+        (\paperwidth-\margin-\angleSize-6mm,-\paperheight+\margin);
+    \draw[draw=\bodyTextColor, shift={(current page.north west)}, very thick]
+        (\margin,-\paperheight+\margin+8mm) --
+        (\margin,-\paperheight+\margin) --
+        (\margin+8mm,-\paperheight+\margin);
+\end{tikzpicture}%
 
+\ifthenelse{\equal{\lang}{en}}{
+    \section{More Skills}
+}{
+    \section{Más Habilidades}
+}
 
-% \section{More Skills}
-
-   % \section{Technical Skills}
    \begin{multicols}{2}
     \input{specificAbilities/2. SignalsAndSystems/main}
     \input{specificAbilities/5. Software/main}    

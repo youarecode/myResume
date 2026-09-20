@@ -1,0 +1,61 @@
+% body.sty wraps the whole column in \begin{center}; makebox+hfill keeps
+% the title flush left and the company tag(s) flush right on one line
+% regardless of that outer centering. Each company keeps the same tone
+% it has in Recorrido (GreenIT family, one shade per company).
+\newcommand{\roleHeader}[2]{\noindent\makebox[\linewidth]{\textbf{#1}\hfill#2}\\[0.5mm]}
+
+\ifthenelse{\equal{\lang}{en}}{
+\section{Roles I've Held}
+\small
+
+\roleHeader{Data Engineer}{\renewcommand{\tagBackColor}{GreenIT!85!black}\tag[2]{Autentio}\renewcommand{\tagBackColor}{GreenIT}\tag[2]{Meduzia}}
+Builds and maintains the pipelines that move, store and transform data reliably at scale.
+\medskip
+
+\roleHeader{Backend Engineer}{\renewcommand{\tagBackColor}{GreenIT}\tag[2]{Meduzia}}
+Builds and deploys backend services and web apps end to end, from the API to the pipeline that ships them.
+\medskip
+
+\roleHeader{ML Engineer}{\renewcommand{\tagBackColor}{GreenIT!70!black}\tag[2]{ADABA}}
+Designs, trains and deploys models that learn patterns from data to predict outcomes.
+\medskip
+
+\roleHeader{AI Engineer}{\renewcommand{\tagBackColor}{GreenIT}\tag[2]{Meduzia}}
+Builds products on top of foundation models (LLMs): prompting, RAG, agents, and serving them in production.
+\medskip
+
+\roleHeader{Data Scientist}{\renewcommand{\tagBackColor}{GreenIT!40!black}\tag[2]{UdeSA (CNC)}}
+Explores data, tests hypotheses and prototypes models to extract insights and validate ideas before taking them to production.
+\medskip
+
+\roleHeader{Electronic Engineer}{\renewcommand{\tagBackColor}{GreenIT!55!black}\tag[2]{Body Health}}
+Designs and analyzes systems that sense, process and control physical signals.
+\bigskip
+}{
+\section{Roles Que He Asumido}
+\small
+
+\roleHeader{Data Engineer}{\renewcommand{\tagBackColor}{GreenIT!85!black}\tag[2]{Autentio}\renewcommand{\tagBackColor}{GreenIT}\tag[2]{Meduzia}}
+Construye y mantiene los pipelines que transportan, almacenan y transforman datos de forma confiable y a escala.
+\medskip
+
+\roleHeader{Backend Engineer}{\renewcommand{\tagBackColor}{GreenIT}\tag[2]{Meduzia}}
+Diseña y despliega servicios backend y aplicaciones web de punta a punta, desde la API hasta el pipeline que las lleva a producción.
+\medskip
+
+\roleHeader{ML Engineer}{\renewcommand{\tagBackColor}{GreenIT!70!black}\tag[2]{ADABA}}
+Diseña, entrena y pone en producción modelos que aprenden patrones de los datos para predecir resultados.
+\medskip
+
+\roleHeader{AI Engineer}{\renewcommand{\tagBackColor}{GreenIT}\tag[2]{Meduzia}}
+Construye productos sobre modelos fundacionales (LLMs): prompting, RAG, agentes, y su puesta en producción.
+\medskip
+
+\roleHeader{Data Scientist}{\renewcommand{\tagBackColor}{GreenIT!40!black}\tag[2]{UdeSA (CNC)}}
+Explora datos, prueba hipótesis y prototipa modelos para extraer insights y validar ideas antes de llevarlas a producción.
+\medskip
+
+\roleHeader{Ingeniero Electrónico}{\renewcommand{\tagBackColor}{GreenIT!55!black}\tag[2]{Body Health}}
+Diseña y analiza sistemas que sensan, procesan y controlan señales físicas.
+\bigskip
+}

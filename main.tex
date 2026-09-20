@@ -1,7 +1,12 @@
 \documentclass{styles/myResume}
 
-% \newcommand{\lang}{en}
-\newcommand{\lang}{es}
+% default language when built directly (make pdf); main_es.tex/main_en.tex
+% override this via \langoverride so both versions can build from one source.
+\ifdefined\langoverride
+    \newcommand{\lang}{\langoverride}
+\else
+    \newcommand{\lang}{es}
+\fi
 
 \begin{document}
     \pagestyle{empty}
@@ -10,36 +15,36 @@
     \begin{sideBar}
         \input{2. education}
         \vspace{5mm}
-        %\vspace{25mm}
-        
-        \input{4. workHistory}
-     %   \vspace{5mm}
-        % \input{6. jobAspiration} 
-        %\vspace{5mm}
-        \input{9. softSkills}
+        \input{careerTimeline/14.4. careerTimeline}
     \end{sideBar}
-    
+
     \begin{body}
-        \input{3. courses}
         % \input{7. projects}
-        \input{8. techSkills}
+        \input{17. roleSummary}
+        \input{9. softSkills}
     \end{body}
 
-    
-    %\begin{newPage}
-     %   \input{10. moreSkills}
-    %     \input{11. Note}
-    %\end{newPage}
-    
-    
-    % \begin{newPage}
-    %     % \input{10. moreSkills}
-    %      \input{11. Note}
-    % \end{newPage}
-    
-    % \begin{bodyODD}
-    %     \input{9. moreSkills}
-    % \end{bodyODD}
-    % \input{10. statistics}
-    % \input{11. publications}
+    \begin{newPage}
+        \input{4. workHistory}
+    \end{newPage}
+
+    \begin{newPage}
+        \input{8. techSkills}
+    \end{newPage}
+
+    \begin{newPage}
+        \input{10. moreSkills}
+    \end{newPage}
+
+    \begin{newPage}
+        \input{3. courses}
+    \end{newPage}
+
+    \begin{newPage}
+        \input{16. books}
+    \end{newPage}
+
+    \begin{newPage}
+        \input{18. books2}
+    \end{newPage}
 \end{document}

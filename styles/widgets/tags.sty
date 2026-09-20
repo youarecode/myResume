@@ -42,3 +42,42 @@
     \tikz[baseline]\node[anchor=base,draw=\tagForeColor,rounded corners,inner xsep=0.75ex,inner ysep =0.75ex,text height=1.5ex,text depth=0.25ex, line width=0.1 mm, fill=\tagColor]{#2};
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% category box: groups several \tag's under one bordered box, with the
+% category name centered on its own line inside -- if the label is wider
+% than the tags themselves, the box simply widens to fit it whole rather
+% than truncating.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newsavebox{\tagGroupTagsBox}
+\newsavebox{\tagGroupTitleBox}
+\newlength{\tagGroupWidth}
+\newlength{\tagGroupMaxWidth}
+\newcommand{\tagGroup}[3]{% #1=category color, #2=label, #3=content (usually a run of \tag calls)
+    \renewcommand{\tagBackColor}{#1}%
+    \setlength{\tagGroupMaxWidth}{0.92\linewidth}%
+    \sbox{\tagGroupTagsBox}{#3}%
+    \sbox{\tagGroupTitleBox}{\bfseries\fontsize{7}{8}\selectfont #2}%
+    \setlength{\tagGroupWidth}{\wd\tagGroupTagsBox}%
+    \ifdim\tagGroupWidth>\tagGroupMaxWidth
+        % too many tags for one line: rewrap them inside a fixed-width
+        % box so they flow onto a second (or third) row instead of
+        % running off the page.
+        \setlength{\tagGroupWidth}{\tagGroupMaxWidth}%
+        \sbox{\tagGroupTagsBox}{\begin{minipage}[t]{\tagGroupWidth}\centering#3\end{minipage}}%
+    \fi
+    \ifdim\wd\tagGroupTitleBox>\tagGroupWidth
+        \setlength{\tagGroupWidth}{\wd\tagGroupTitleBox}%
+    \fi
+    \tcbox[on line,colframe=#1!65!black,colback=white,boxrule=0.5pt,arc=2mm,boxsep=0pt,left=0pt,right=0pt,top=0pt,bottom=1.3mm]{%
+        \begin{tabular}{@{}p{\tagGroupWidth}@{}}
+        \colorbox{#1!35!white}{\rule{0pt}{2.1ex}\makebox[\dimexpr\tagGroupWidth-2pt\relax][c]{\bfseries\fontsize{7}{8}\selectfont #2}}\\[0.5em]
+        \centering\usebox{\tagGroupTagsBox}
+        \end{tabular}
+    }%
+}
+
+% \taglegenditem{color}{label} -- small inline swatch explaining a tag category color
+\newcommand{\taglegenditem}[2]{%
+    \tikz[baseline=-0.3ex]\node[rounded corners=0.5pt,draw=#1!65!black,line width=0.4pt,fill=#1!30!white,minimum width=3.2mm,minimum height=2.6mm,inner sep=0pt]{};\,#2%
+}
+

@@ -66,6 +66,10 @@
 \RequirePackage{styles/blocks/tagBlock}
 
 \RequirePackage{styles/widgets/tags}
+\RequirePackage{styles/widgets/subwayDiagram}
+\RequirePackage{styles/widgets/subwayDiagram-v2}
+\RequirePackage{styles/widgets/subwayDiagram-v4}
+\RequirePackage{styles/widgets/bookCard}
 \RequirePackage{styles/widgets/wheelChart}
 \RequirePackage{styles/widgets/debug}
 \RequirePackage{styles/widgets/spiderChart}
