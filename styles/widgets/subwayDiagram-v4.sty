@@ -10,6 +10,8 @@
 
 % --- row geometry (all in cm, one shared coordinate system) ---
 \def\tlLabelX{-0.55}   % x anchor (east) for the year number
+\def\tlTierTop{0.2}    % ruler to the centre of the first tier below it: half a 4mm box, so it touches the line
+\def\tlGutter{1.19}    % width the year labels take left of x=0; the ruler gives it back
 \def\tlWideH{1.4}      % row pitch: year with quarter entries
 \def\tlNarrowH{0.75}   % row pitch: year with only a span block
 
@@ -31,7 +33,7 @@
 
 \newenvironment{timelineChart}{%
     \def\tlY{0}%
-    \pgfmathsetmacro{\tlRulerW}{\linewidth/1cm}% fill the column's real width
+    \pgfmathsetmacro{\tlRulerW}{\linewidth/1cm-\tlGutter}% year gutter + ruler = the column's real width
     \noindent
     \begin{tikzpicture}[inner sep=0pt, outer sep=0pt]
 }{%
@@ -51,11 +53,11 @@
     \node[anchor=east, font=\fontsize{7}{8}\selectfont\bfseries, color=gray!70]
         at (\tlLabelX,\tlY) {#1};%
     \draw[line width=1.2pt, gray!30] (0,\tlY) -- (\tlRulerW,\tlY);
-    \draw[line width=0.8pt, gray!40] (0,\tlY-0.1) -- (0,\tlY+0.1);
-    \draw[line width=0.8pt, gray!40] (\tlRulerW*0.25,\tlY-0.1) -- (\tlRulerW*0.25,\tlY+0.1);
-    \draw[line width=0.8pt, gray!40] (\tlRulerW*0.5,\tlY-0.1) -- (\tlRulerW*0.5,\tlY+0.1);
-    \draw[line width=0.8pt, gray!40] (\tlRulerW*0.75,\tlY-0.1) -- (\tlRulerW*0.75,\tlY+0.1);
-    \draw[line width=0.8pt, gray!40] (\tlRulerW,\tlY-0.1) -- (\tlRulerW,\tlY+0.1);
+    \draw[line width=0.8pt, gray!40] (0,\tlY) -- (0,\tlY+0.1);
+    \draw[line width=0.8pt, gray!40] (\tlRulerW*0.25,\tlY) -- (\tlRulerW*0.25,\tlY+0.1);
+    \draw[line width=0.8pt, gray!40] (\tlRulerW*0.5,\tlY) -- (\tlRulerW*0.5,\tlY+0.1);
+    \draw[line width=0.8pt, gray!40] (\tlRulerW*0.75,\tlY) -- (\tlRulerW*0.75,\tlY+0.1);
+    \draw[line width=0.8pt, gray!40] (\tlRulerW,\tlY) -- (\tlRulerW,\tlY+0.1);
 }
 
 % \tlYearEmpty{year} - a year with nothing to show: thin stub row
@@ -80,7 +82,7 @@
     \or \pgfmathsetmacro{\qx}{\tlRulerW*0.625}\stepcounter{tlStackC}\edef\qs{\value{tlStackC}}%
     \or \pgfmathsetmacro{\qx}{\tlRulerW*0.875}\stepcounter{tlStackD}\edef\qs{\value{tlStackD}}%
     \fi%
-    \pgfmathsetmacro{\qy}{\tlY-0.5-\tlJobOffset-\value{tlBlockStack}*0.45-(\qs-1)*0.35}%
+    \pgfmathsetmacro{\qy}{\tlY-\tlTierTop-\tlJobOffset-\value{tlBlockStack}*0.45-(\qs-1)*0.35}%
     \node[
         rounded corners=0.5mm,
         draw=#2!45!black,
@@ -110,7 +112,7 @@
     \or \pgfmathsetmacro{\qx}{\tlRulerW*0.625}\stepcounter{tlJobStackC}\edef\qs{\value{tlJobStackC}}%
     \or \pgfmathsetmacro{\qx}{\tlRulerW*0.875}\stepcounter{tlJobStackD}\edef\qs{\value{tlJobStackD}}%
     \fi%
-    \pgfmathsetmacro{\qy}{\tlY-0.5-(\qs-1)*0.45}%
+    \pgfmathsetmacro{\qy}{\tlY-\tlTierTop-(\qs-1)*0.45}%
     \node[
         rounded corners=0.5mm,
         draw=#2!80!black,
@@ -149,7 +151,7 @@
     \ifnum#1<3 \ifnum#2>1 \setcounter{tlStackB}{\qs}\fi\fi
     \ifnum#1<4 \ifnum#2>2 \setcounter{tlStackC}{\qs}\fi\fi
     \ifnum#2>3 \setcounter{tlStackD}{\qs}\fi
-    \pgfmathsetmacro{\qy}{\tlY-0.5-\tlJobOffset-\value{tlBlockStack}*0.45-(\qs-1)*0.35}%
+    \pgfmathsetmacro{\qy}{\tlY-\tlTierTop-\tlJobOffset-\value{tlBlockStack}*0.45-(\qs-1)*0.35}%
     \node[
         rounded corners=0.5mm,
         draw=#3!45!black,
@@ -190,7 +192,7 @@
     \ifnum\qStartQ<3 \ifnum\qEndQ>1 \setcounter{tlStackB}{\qs}\fi\fi
     \ifnum\qStartQ<4 \ifnum\qEndQ>2 \setcounter{tlStackC}{\qs}\fi\fi
     \ifnum\qEndQ>3 \setcounter{tlStackD}{\qs}\fi
-    \pgfmathsetmacro{\qy}{\tlY-0.5-\tlJobOffset-\value{tlBlockStack}*0.45-(\qs-1)*0.35}%
+    \pgfmathsetmacro{\qy}{\tlY-\tlTierTop-\tlJobOffset-\value{tlBlockStack}*0.45-(\qs-1)*0.35}%
     \node[
         rounded corners=0.5mm,
         draw=#3!45!black,
@@ -224,7 +226,7 @@
     \ifnum#1<3 \ifnum#2>1 \setcounter{tlJobStackB}{\qs}\fi\fi
     \ifnum#1<4 \ifnum#2>2 \setcounter{tlJobStackC}{\qs}\fi\fi
     \ifnum#2>3 \setcounter{tlJobStackD}{\qs}\fi
-    \pgfmathsetmacro{\qy}{\tlY-0.5-(\qs-1)*0.45}%
+    \pgfmathsetmacro{\qy}{\tlY-\tlTierTop-(\qs-1)*0.45}%
     \node[
         rounded corners=0.5mm,
         draw=#3!80!black,
@@ -265,7 +267,7 @@
     % center back in so the whole box stays inside the ruler.
     \pgfmathsetmacro{\qcx}{max(\qw/2, min(\qcxRaw, \tlRulerW-\qw/2))}%
     \stepcounter{tlBookLine}%
-    \pgfmathsetmacro{\qy}{\tlY-0.5-\tlJobOffset-\value{tlBlockStack}*0.45-\tlCourseOffset-(\value{tlBookLine}-1)*0.35}%
+    \pgfmathsetmacro{\qy}{\tlY-\tlTierTop-\tlJobOffset-\value{tlBlockStack}*0.45-\tlCourseOffset-(\value{tlBookLine}-1)*0.35}%
     \node[
         rounded corners=0.5mm,
         draw=#3!45!black,
@@ -287,7 +289,7 @@
 % stacks below any full-width block already placed this row, and
 % pushes quarter entries further down in turn.
 \newcommand{\tlSpanBlock}[2]{%
-    \pgfmathsetmacro{\qy}{\tlY-0.5-\tlJobOffset-\value{tlBlockStack}*0.45}%
+    \pgfmathsetmacro{\qy}{\tlY-\tlTierTop-\tlJobOffset-\value{tlBlockStack}*0.45}%
     \node[
         rounded corners=0.5mm,
         draw=#1!45!black,

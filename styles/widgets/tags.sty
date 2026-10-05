@@ -52,11 +52,13 @@
 \newsavebox{\tagGroupTitleBox}
 \newlength{\tagGroupWidth}
 \newlength{\tagGroupMaxWidth}
+% category title: small tracked caps (Montserrat Bold has no true small caps)
+\newcommand{\tagGroupTitleText}[1]{{\bfseries\fontsize{6.2}{7}\selectfont\addfontfeature{LetterSpace=10}\MakeUppercase{#1}}}
 \newcommand{\tagGroup}[3]{% #1=category color, #2=label, #3=content (usually a run of \tag calls)
     \renewcommand{\tagBackColor}{#1}%
     \setlength{\tagGroupMaxWidth}{0.92\linewidth}%
     \sbox{\tagGroupTagsBox}{#3}%
-    \sbox{\tagGroupTitleBox}{\bfseries\fontsize{7}{8}\selectfont #2}%
+    \sbox{\tagGroupTitleBox}{\tagGroupTitleText{#2}}%
     \setlength{\tagGroupWidth}{\wd\tagGroupTagsBox}%
     \ifdim\tagGroupWidth>\tagGroupMaxWidth
         % too many tags for one line: rewrap them inside a fixed-width
@@ -65,12 +67,13 @@
         \setlength{\tagGroupWidth}{\tagGroupMaxWidth}%
         \sbox{\tagGroupTagsBox}{\begin{minipage}[t]{\tagGroupWidth}\centering#3\end{minipage}}%
     \fi
-    \ifdim\wd\tagGroupTitleBox>\tagGroupWidth
-        \setlength{\tagGroupWidth}{\wd\tagGroupTitleBox}%
+    % the title band is the label plus \fboxsep padding on each side
+    \ifdim\dimexpr\wd\tagGroupTitleBox+2\fboxsep\relax>\tagGroupWidth
+        \setlength{\tagGroupWidth}{\dimexpr\wd\tagGroupTitleBox+2\fboxsep\relax}%
     \fi
-    \tcbox[on line,colframe=#1!65!black,colback=white,boxrule=0.5pt,arc=2mm,boxsep=0pt,left=0pt,right=0pt,top=0pt,bottom=1.3mm]{%
+    \tcbox[on line,colframe=#1!65!black,colback=white,boxrule=0.5pt,arc=2mm,boxsep=0pt,left=0.8mm,right=0.8mm,top=0.8mm,bottom=1.3mm]{%
         \begin{tabular}{@{}p{\tagGroupWidth}@{}}
-        \colorbox{#1!35!white}{\rule{0pt}{2.1ex}\makebox[\dimexpr\tagGroupWidth-2pt\relax][c]{\bfseries\fontsize{7}{8}\selectfont #2}}\\[0.5em]
+        \colorbox{#1!35!white}{\rule[-1.6pt]{0pt}{5.9pt}\makebox[\dimexpr\tagGroupWidth-2\fboxsep\relax][c]{\tagGroupTitleText{#2}}}\\[0.5em]
         \centering\usebox{\tagGroupTagsBox}
         \end{tabular}
     }%
